@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">App Fitness A</string>
+    <string-array name="opcions_genere">
+        <item>Masculí</item>
+        <item>Femení</item>
+        <item>Prefereixo no dir-ho</item>
+    </string-array>
 </resources>

@@ -39,13 +39,14 @@ fun FitnessApp(){
     var genere:String by remember { mutableStateOf("Dona") }
     var alçada:Int by remember { mutableStateOf(170) }
     var pes:Double by remember { mutableStateOf(60.0) }
+    var pesObjectiu:Double by remember { mutableStateOf(60.0) }
     var objectiu:String by remember { mutableStateOf("Guanyar massa muscular") }
     var nivellActivitat:String by remember { mutableStateOf("Moderat") }
-    var editant: Boolean by remember { mutableStateOf(false) }
+    var editant: Boolean by remember { mutableStateOf(true) }
 
     if(editant){
         EditProfileScreen(nom, email, dataNaixement, genere, alçada,
-            pes,objectiu, nivellActivitat,{editant=false})
+            pes, pesObjectiu,objectiu, nivellActivitat,{editant=false})
     }else{
         ProfileScreen(nom, email, dataNaixement, genere, alçada,
                         pes,objectiu, nivellActivitat,
