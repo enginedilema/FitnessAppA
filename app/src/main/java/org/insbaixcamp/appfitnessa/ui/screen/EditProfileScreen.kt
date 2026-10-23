@@ -40,7 +40,7 @@ fun EditProfileScreen(
     pesObjectiu : Double,
     objectiu: String,
     nivellActivitat: String,
-    guardar: () -> Unit
+    guardar: (String, String, String, String, Int, Double, Double, String, String) -> Unit
 ) {
     var nomNou: String by remember { mutableStateOf(nom) }
     var emailNou: String by remember { mutableStateOf(email) }
@@ -145,6 +145,9 @@ fun EditProfileScreen(
                 .padding(8.dp)
                 .fillMaxWidth(),
         )
+        Button(onClick = { guardar(nomNou,emailNou,dataNaixementNou,genereNou,alçadaNou,pesNou,pesObjectiuNou,objectiuNou,nivellActivitatNou) }) {
+            Text("Guardar dades")
+        }
 
     }
 }

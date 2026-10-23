@@ -46,7 +46,18 @@ fun FitnessApp(){
 
     if(editant){
         EditProfileScreen(nom, email, dataNaixement, genere, alçada,
-            pes, pesObjectiu,objectiu, nivellActivitat,{editant=false})
+            pes, pesObjectiu,objectiu, nivellActivitat,{nomN, emailN, dataNaixementN, genereN, alçadaN,pesN, pesObjectiuN, objectiuN, nivellActivitatN ->
+                nom = nomN
+                email = emailN
+                dataNaixement = dataNaixementN
+                genere = genereN
+                alçada = alçadaN
+                pes = pesN
+                pesObjectiu = pesObjectiuN
+                objectiu = objectiuN
+                nivellActivitat = nivellActivitatN
+                editant = false
+            })
     }else{
         ProfileScreen(nom, email, dataNaixement, genere, alçada,
                         pes,objectiu, nivellActivitat,
