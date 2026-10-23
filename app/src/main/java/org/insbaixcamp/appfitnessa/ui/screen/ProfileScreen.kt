@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -25,12 +26,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import org.insbaixcamp.appfitnessa.R
 import java.util.Calendar
+import java.util.TimeZone
 
 @Composable
 fun ProfileScreen(
     nom: String,
     email: String,
-    dataNaixement: String,
+    dataNaixement: Long,
     genere: String,
     alçada: Int,
     pes: Double,
@@ -38,7 +40,7 @@ fun ProfileScreen(
     nivellActivitat: String,
     editar: () -> Unit,
 ) {
-    Column() {
+    Column(modifier = Modifier.padding(top=16.dp)) {
         //Caixa de foto, nom i email
         Column(
             Modifier.fillMaxWidth(),
@@ -82,7 +84,7 @@ fun ProfileScreen(
                         "Edat",
                         color = Color.Gray
                     )
-                    // Calcular edat de manera precisa segons la data de naixement (dd/mm/aaaa)
+                    // Calcular edat de manera precisa segons la data de naixement en mil·lisegons
                     val edat = calcularEdat(dataNaixement)
                     Text(
                         edat.toString(),
@@ -171,20 +173,24 @@ fun ProfileScreen(
     }
 
 }
-
-private fun calcularEdat(dataNaixement: String): Int {
+/*
+* Funcio per calcular l'edat a partir de la data de naixement
+* @param dataNaixement Data de naixement en format Date millis*/
+private fun calcularEdat(dataNaixement: Long): Int {
+    if (dataNaixement <= 0L) return 0
     return try {
-        val parts = dataNaixement.split("/")
-        if (parts.size != 3) return 0
-
-        val diaNaixement = parts[0].toInt()
-        val mesNaixement = parts[1].toInt() - 1 // Calendar: els mesos van de 0 a 11
-        val anyNaixement = parts[2].toInt()
-
+        val calNaixement = Calendar.getInstance(TimeZone.getTimeZone("UTC")).apply {
+            timeInMillis = dataNaixement
+        }
         val avui = Calendar.getInstance()
+
         val anyActual = avui.get(Calendar.YEAR)
         val mesActual = avui.get(Calendar.MONTH)
         val diaActual = avui.get(Calendar.DAY_OF_MONTH)
+
+        val anyNaixement = calNaixement.get(Calendar.YEAR)
+        val mesNaixement = calNaixement.get(Calendar.MONTH)
+        val diaNaixement = calNaixement.get(Calendar.DAY_OF_MONTH)
 
         var edat = anyActual - anyNaixement
 

@@ -33,24 +33,24 @@ import org.insbaixcamp.appfitnessa.ui.components.MenuDesplegable
 fun EditProfileScreen(
     nom: String,
     email: String,
-    dataNaixement: String,
+    dataNaixement: Long,
     genere: String,
     alçada: Int,
     pes: Double,
-    pesObjectiu : Double,
+    pesObjectiu: Double,
     objectiu: String,
     nivellActivitat: String,
-    guardar: (String, String, String, String, Int, Double, Double, String, String) -> Unit
+    guardar: (String, String, Long, String, Int, Double, Double, String, String) -> Unit
 ) {
     var nomNou: String by remember { mutableStateOf(nom) }
     var emailNou: String by remember { mutableStateOf(email) }
-    var dataNaixementNou: String by remember { mutableStateOf(dataNaixement) }
+    var dataNaixementNou: Long by remember { mutableStateOf(dataNaixement) }
     var genereNou: String by remember { mutableStateOf(genere) }
     var alçadaNou: Int by remember { mutableStateOf(alçada) }
     var pesNou: Double by remember { mutableStateOf(pes) }
     var pesObjectiuNou: Double by remember { mutableStateOf(pesObjectiu) }
-    var objectiuNou:String by remember { mutableStateOf(objectiu) }
-    var nivellActivitatNou:String by remember { mutableStateOf(nivellActivitat) }
+    var objectiuNou: String by remember { mutableStateOf(objectiu) }
+    var nivellActivitatNou: String by remember { mutableStateOf(nivellActivitat) }
 
     var opcionsGenere = listOf("Masculí", "Femení", "Prefereixo no dir-ho")
     var opcionsObjectiu = listOf("Guanyar massa muscular", "Redueix pes", "Manté el meu pes")
@@ -60,19 +60,26 @@ fun EditProfileScreen(
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = null,
-                Modifier.padding(start = 24.dp)
+                Modifier
+                    .padding(start = 24.dp)
                     .size(100.dp)
                     .clip(CircleShape)
                     .background(Color.Black),
             )
-            Column(Modifier.fillMaxWidth().padding(end = 8.dp),
-                horizontalAlignment = Alignment.End) {
+            Column(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(end = 8.dp),
+                horizontalAlignment = Alignment.End
+            ) {
                 Button(onClick = {}) { Text(text = "Canviar foto") }
                 Button(onClick = {}) { Text(text = "Eliminar foto") }
             }
         }
-        Text(text = "Dades personals",
-            modifier = Modifier.padding(top = 16.dp, start = 8.dp))
+        Text(
+            text = "Dades personals",
+            modifier = Modifier.padding(top = 16.dp, start = 8.dp)
+        )
         OutlinedTextField(
             value = nomNou,
             onValueChange = { nomNou = it },
@@ -92,8 +99,8 @@ fun EditProfileScreen(
         //Data naixement
         CalendariPicker(
             label = "Data de naixement",
-            selectedDateMillis = dataNaixementNou.toLongOrNull(),
-            onDateSelected = { dataNaixementNou = it.toString() },
+            selectedDateMillis = dataNaixementNou,
+            onDateSelected = { dataNaixementNou = it },
             modifier = Modifier
                 .padding(8.dp)
                 .fillMaxWidth(),
@@ -110,32 +117,42 @@ fun EditProfileScreen(
         )
 
         //Dades físiques
-        Text(text = "Dades físiques",
-            modifier = Modifier.padding(top = 16.dp, start = 8.dp))
-        Row(modifier = Modifier.fillMaxWidth()){
+        Text(
+            text = "Dades físiques",
+            modifier = Modifier.padding(top = 16.dp, start = 8.dp)
+        )
+        Row(modifier = Modifier.fillMaxWidth()) {
             OutlinedTextField(
                 value = alçadaNou.toString(),
                 onValueChange = { alçadaNou = it.toIntOrNull() ?: 0 },
                 label = { Text("Alçada (cm)") },
-                modifier = Modifier.weight(1f).padding(start = 8.dp, end = 4.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 8.dp, end = 4.dp),
 
-            )
+                )
             OutlinedTextField(
                 value = pesNou.toString(),
                 onValueChange = { pesNou = it.toDoubleOrNull() ?: 0.0 },
                 label = { Text("Pes (kg)") },
-                modifier = Modifier.weight(1f).padding(start = 4.dp, end = 4.dp),
-                )
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 4.dp, end = 4.dp),
+            )
             OutlinedTextField(
                 value = pesObjectiuNou.toString(),
                 onValueChange = { pesObjectiuNou = it.toDoubleOrNull() ?: 0.0 },
                 label = { Text("Pes (kg)") },
-                modifier = Modifier.weight(1f).padding(start = 4.dp, end = 8.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(start = 4.dp, end = 8.dp),
 
                 )
         }
-        Text(text = "Objectiu Principal",
-            modifier = Modifier.padding(top = 16.dp, start = 8.dp))
+        Text(
+            text = "Objectiu Principal",
+            modifier = Modifier.padding(top = 16.dp, start = 8.dp)
+        )
         MenuDesplegable(
             label = "",
             opcions = opcionsObjectiu,
@@ -145,7 +162,23 @@ fun EditProfileScreen(
                 .padding(8.dp)
                 .fillMaxWidth(),
         )
-        Button(onClick = { guardar(nomNou,emailNou,dataNaixementNou,genereNou,alçadaNou,pesNou,pesObjectiuNou,objectiuNou,nivellActivitatNou) }) {
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+            onClick = {
+                guardar(
+                    nomNou,
+                    emailNou,
+                    dataNaixementNou,
+                    genereNou,
+                    alçadaNou,
+                    pesNou,
+                    pesObjectiuNou,
+                    objectiuNou,
+                    nivellActivitatNou
+                )
+            }) {
             Text("Guardar dades")
         }
 
